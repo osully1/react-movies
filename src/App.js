@@ -1,22 +1,29 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+
 import './App.css';
+import { getCurrentMovies } from './services/movie-api'
+import MovieGrid from './components/MovieGrid/MovieGrid'
 
 function App() {
+
+  const [ movieData, setMovieData ] = useState([]);
+
+  async function getAppData() {
+    const data = await getCurrentMovies();
+    setMovieData(data.results);
+  }
+  
+  useEffect(() => {
+    getAppData();
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Movies Now Playing</h1>
+        <div className="movie-grid">
+          <MovieGrid currentMovieData={movieData} />
+        </div>
       </header>
     </div>
   );
