@@ -12,7 +12,7 @@ function App() {
     const data = await getCurrentMovies();
     setMovieData(data.results);
   }
-  
+  //
   useEffect(() => {
     getAppData();
   }, [])
